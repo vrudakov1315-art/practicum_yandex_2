@@ -1,9 +1,9 @@
 from io import BytesIO
 
-from PIL import Image, ImageDraw, ImageFont
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.files.base import ContentFile
 from django.db import models
+from PIL import Image, ImageDraw, ImageFont
 
 from users.constants import (
     AVATAR_FONT_PATH,
