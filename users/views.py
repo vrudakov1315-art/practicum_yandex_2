@@ -17,15 +17,15 @@ def user_register(request):
 
 
 def user_login(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        form = LoginForm(request.POST or None)
+    if form.is_valid():
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
         user = authenticate(request, username=email, password=password)
         if user is not None:
             login(request, user)
             return redirect('projects:project_list')
         messages.error(request, 'Неверный email или пароль')
-    form = LoginForm()
     return render(request, 'users/login.html', {'form': form})
 
 
