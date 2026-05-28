@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 from users.models import User
+from users.validators import validate_github
 
 
 class RegistrationForm(forms.ModelForm):
@@ -39,6 +40,12 @@ class ProfileEditForm(forms.ModelForm):
         model = User
         fields = ['name', 'surname', 'avatar', 'phone', 'github_url', 'about']
         widgets = {'about': forms.Textarea(attrs={'rows': 4})}
+
+    def clean_github_url(self):
+        value = self.cleaned_data.get('github_url')
+        if value:
+            validate_github(value)
+        return value
 
 
 class UserPasswordChangeForm(PasswordChangeForm):
